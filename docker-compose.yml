@@ -1,0 +1,119 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d:ro
+    networks: [backend]
+
+  wordpress:
+    image: wordpress:latest
+    restart: unless-stopped
+    depends_on: [db]
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('DISALLOW_FILE_EDIT', true);
+    volumes:
+      - wp_data:/var/www/html
+    networks: [backend, frontend]
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: unless-stopped
+    depends_on: [db]
+    environment:
+      PMA_HOST: db
+    ports:
+      - "127.0.0.1:8081:80"
+    networks: [backend]
+
+  nginx:
+    image: nginx:stable
+    restart: unless-stopped
+    depends_on: [wordpress]
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks: [frontend, monitoring]
+
+  mysqld-exporter:
+    image: prom/mysqld-exporter:latest
+    restart: unless-stopped
+    depends_on: [db]
+    command:
+      - --mysqld.address=db:3306
+      - --mysqld.username=exporter
+    environment:
+      MYSQLD_EXPORTER_PASSWORD: ${EXPORTER_PASSWORD}
+    networks: [backend, monitoring]
+
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:latest
+    restart: unless-stopped
+    depends_on: [nginx]
+    command:
+      - --nginx.scrape-uri=http://nginx:8080/nginx_status
+    networks: [monitoring]
+
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prom_data:/prometheus
+    ports:
+      - "127.0.0.1:9090:9090"
+    networks: [monitoring]
+
+  loki:
+    image: grafana/loki:latest
+    restart: unless-stopped
+    command: -config.file=/etc/loki/loki.yml
+    volumes:
+      - ./loki/loki.yml:/etc/loki/loki.yml:ro
+      - loki_data:/loki
+    networks: [monitoring]
+
+  promtail:
+    image: grafana/promtail:latest
+    restart: unless-stopped
+    command: -config.file=/etc/promtail/promtail.yml
+    volumes:
+      - ./promtail/promtail.yml:/etc/promtail/promtail.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks: [monitoring]
+
+  grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "127.0.0.1:3000:3000"
+    networks: [monitoring]
+
+networks:
+  frontend:
+  backend:
+  monitoring:
+
+volumes:
+  db_data:
+  wp_data:
+  prom_data:
+  loki_data:
+  grafana_data:
