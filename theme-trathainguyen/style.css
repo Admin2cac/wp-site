@@ -1,0 +1,406 @@
+﻿/*
+Theme Name: Tra Thai Nguyen
+Theme URI: https://example.com/tra-thai-nguyen
+Author: Student
+Description: Giao dien website quang ba dac san Tra Thai Nguyen.
+Version: 1.0
+Requires at least: 6.0
+Text Domain: tra-thai-nguyen
+*/
+:root {
+    --green-dark: #173f2a;
+    --green: #39734b;
+    --cream: #f8f5e9;
+    --gold: #c9a45c;
+    --text: #26352b;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: var(--text);
+    background: var(--cream);
+    line-height: 1.7;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Đầu trang */
+.site-header {
+    background: #fffdf7;
+    border-bottom: 1px solid #e9e3d3;
+    position: relative;
+    z-index: 10;
+}
+
+.header-inner {
+    max-width: 1180px;
+    margin: auto;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--green-dark);
+}
+
+.brand-icon {
+    font-size: 36px;
+}
+
+.brand strong,
+.brand small {
+    display: block;
+}
+
+.brand strong {
+    letter-spacing: 1px;
+}
+
+.brand small {
+    font-size: 12px;
+    color: #777;
+}
+
+.main-nav,
+.main-nav ul {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav a {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.main-nav a:hover {
+    color: var(--green);
+}
+
+/* Banner */
+
+.hero {
+    min-height: 480px;
+    padding: 80px max(7%, calc((100% - 1180px) / 2));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    color: #fffdf5;
+    background:
+        linear-gradient(90deg, rgba(15, 48, 32, 0.92) 0%, rgba(21, 58, 39, 0.72) 48%, rgba(21, 58, 39, 0.2) 100%),
+        url("assets/images/doi-che.jpg") center 55% / cover no-repeat;
+}
+.hero-content {
+    max-width: 650px;
+}
+
+.hero-label,
+.eyebrow {
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.hero h1 {
+    margin: 18px 0;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.15;
+}
+
+.hero h1 em {
+    color: #e7d39e;
+    font-style: normal;
+}
+
+.hero p {
+    max-width: 570px;
+    color: #e8eee5;
+    font-size: 17px;
+}
+
+.button-primary,
+.button-light {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 13px 24px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.button-primary {
+    color: var(--green-dark);
+    background: #e5cc8d;
+}
+
+.button-primary:hover {
+    background: #f2dfad;
+}
+
+.hero-decoration {
+    min-width: 220px;
+    min-height: 220px;
+    border: 1px solid #ffffff55;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #f5e7bb;
+    letter-spacing: 2px;
+    font-size: 10px;
+}
+
+.hero-decoration span:first-child {
+    font-size: 80px;
+}
+
+/* Giới thiệu */
+.section-wrap {
+    max-width: 1180px;
+    margin: auto;
+    padding: 76px 24px;
+}
+
+.intro {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    align-items: center;
+    gap: 60px;
+}
+
+<CodeBlock language="css" editable>
+.intro-mark {
+    min-height: 260px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #dce7c9;
+}
+.intro-mark img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 260px;
+    object-fit: cover;
+    object-position: center;
+}
+</CodeBlock>
+
+.intro h2,
+.section-heading h2 {
+    color: var(--green-dark);
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.25;
+    margin: 12px 0;
+}
+
+/* Sản phẩm */
+.products {
+    background: #fffdf7;
+    max-width: none;
+    padding-left: max(24px, calc((100% - 1180px) / 2));
+    padding-right: max(24px, calc((100% - 1180px) / 2));
+}
+
+.section-heading {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto 36px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.product-card {
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #eae7db;
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px #173f2a18;
+}
+
+
+.product-art {
+    height: 260px;
+    overflow: hidden;
+    background: #f0eee3;
+}
+
+.product-art img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+.product-card:hover .product-art img {
+    transform: scale(1.04);
+}
+
+.art-one {
+    background: #dce8ce;
+}
+
+.art-two {
+    background: #e8e4c9;
+}
+
+.art-three {
+    background: #e8d9b7;
+}
+
+.product-info {
+    padding: 22px;
+}
+
+.product-tag {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.product-info h3 {
+    color: var(--green-dark);
+    margin: 8px 0;
+}
+
+.product-info p {
+    margin-bottom: 0;
+    color: #626b60;
+}
+
+/* Dải thông điệp */
+.tea-quote {
+    padding: 70px 24px;
+    text-align: center;
+    color: white;
+    background: var(--green-dark);
+}
+
+.tea-quote h2 {
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.3;
+}
+
+.button-light {
+    background: var(--cream);
+    color: var(--green-dark);
+}
+
+/* Chân trang */
+.site-footer {
+    background: #102d1e;
+    color: #e9eee5;
+    padding: 48px 24px 0;
+}
+
+.footer-inner {
+    max-width: 1180px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 40px;
+    padding-bottom: 36px;
+}
+
+.footer-inner h2,
+.footer-inner h3 {
+    color: #e5cc8d;
+}
+
+.footer-inner a {
+    display: block;
+    margin: 6px 0;
+}
+
+.footer-inner a:hover {
+    color: #e5cc8d;
+}
+
+.footer-bottom {
+    border-top: 1px solid #ffffff25;
+    text-align: center;
+    padding: 18px 0;
+    font-size: 13px;
+}
+
+/* Điện thoại và máy tính bảng */
+@media (max-width: 760px) {
+    .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .main-nav,
+    .main-nav ul {
+        flex-wrap: wrap;
+        gap: 12px 18px;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 55px 24px;
+    }
+
+    .hero-decoration {
+        display: none;
+    }
+
+    .intro {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .intro-mark {
+        min-height: 180px;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
