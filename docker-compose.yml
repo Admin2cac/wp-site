@@ -23,8 +23,10 @@ services:
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
       WORDPRESS_CONFIG_EXTRA: |
         define('DISALLOW_FILE_EDIT', true);
+   
     volumes:
       - wp_data:/var/www/html
+      - ./theme-trathainguyen:/var/www/html/wp-content/themes/tra-thai-nguyen
     networks: [backend, frontend]
 
   phpmyadmin:
